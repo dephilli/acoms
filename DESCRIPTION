@@ -8,5 +8,7 @@ Description: Not much
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports:DBI,
+Imports: DBI,
         odbc
+Depends: 
+    R (>= 2.10)
