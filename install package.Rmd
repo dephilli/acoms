@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+author: "David Phillips"
+date: "4/4/2022"
+output: html_document
+---
+
+
+
+```{r}
+install.packages(devtools)
+
+devtools::install_github("dephilli/acoms")
+
+con<-acoms::connect()
+
+
+```
+
+
+```{sql connection=con}
+select *
+from body_loc_cd
+```
+
+```{r}
+DBI::dbDisconnect(con)
+```
