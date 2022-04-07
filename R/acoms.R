@@ -1,16 +1,8 @@
-connect <- function() {
-  connections <- odbc::odbcListDataSources()
+connect<-function(){
+  dsn <- svDialogs::dlgInput("Acoms odbc name", "acoms")$res
 
-  connections$test <- grepl('INFORMIX', connections$description)
-
-  connect <- connections[connections$test == TRUE, ]
-
-  connect <- connect[1, ]
-
-  odbcname <- connect$name
-
-  a <- DBI::dbConnect(odbc::odbc(), odbcname, timeout = 10)
-  return(a)
+  con<-DBI::dbConnect(odbc::odbc(),dsn, timeout=10)
+  return(con)
 }
 
 
