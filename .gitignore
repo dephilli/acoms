@@ -10,3 +10,4 @@ genderbyday.rds
 *.rds
 install package.Rmd
 install package.Rmd
+*.xlsx

@@ -30,6 +30,7 @@ institutional_report <- function(dt, excel = TRUE) {
   sql_mo <- lubridate::month(dt)
   sql_date <- paste0(sql_mo, "/", dy, "/", yt)
   con <- connect()
+  old_day<-lubridate::floor_date(dt, "month")
   p_query <-
     glue::glue_sql(
       "select distinct a.ofndr_num, body_loc_desc, race_cd, sex, lgl_stat_cd, dob, assgn_dt
@@ -271,8 +272,8 @@ where filing_dt<=DATE('{`sql_date`}') and ofndr_num in ({`ofndr_num`})",
 
   writeups$curr_month <-
     ifelse(
-      writeups$filing_dt >= as.Date("2022-02-01") &
-        writeups$filing_dt <= as.Date("2022-02-28"),
+      writeups$filing_dt >= old_day &
+        writeups$filing_dt <= dt,
       "TRUE",
       ""
     )
@@ -304,8 +305,8 @@ where filing_dt<=DATE('{`sql_date`}') and ofndr_num in ({`ofndr_num`})",
            AND pl.pos_loc_cd = was.pos_loc_cd
            AND jt.job_title_cd = was.job_title_cd
            and ofndr_num in ({ofndr_num})
-          and wpa.wrk_prog_strt_dt<=Date('03/31/2022')
-          and end_date>Date('03/31/2022')
+          and wpa.wrk_prog_strt_dt<=Date('{`sql_date`}')
+          and end_date>Date('{`sql_date`}')
 
          ORDER BY wrk_prog_strt_dt DESC",
       .con = con
